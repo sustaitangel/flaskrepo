@@ -2,11 +2,17 @@ from flask import Flask
 app = Flask(__name__)
 
 
+"""acceder a localhost
+>>> ob = app()
+>>> ob.appointment_list()
+Listing of all appointments we have.
+
+"""
+
+
 @app.route('/')
 def hello():
     return 'Hello, world i hate you!!'
-if __name__ == '__main__':
-    app.run()
 
 
 @app.route('/appointments/')
@@ -36,3 +42,8 @@ def appointment_create():
     '/appointments/<int:appointment_id>/delete/', methods=['DELETE'])
 def appointment_delete(appointment_id):
     raise NotImplementedError('DELETE')
+
+if __name__ == '__main__':
+    app.run()
+    import doctest
+    doctest.testmod()
