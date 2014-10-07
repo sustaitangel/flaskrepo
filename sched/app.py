@@ -1,9 +1,7 @@
 from flask import Flask
 from flask.ext.sqlalchemy import SQLAlchemy
 from sched.models import Base
-
 app = Flask(__name__)
-
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///sched.db'
 # Use Flask-SQLAlchemy for its engine and session
 # configuration. Load the extension, giving it the app object,
@@ -12,48 +10,54 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///sched.db'
 db = SQLAlchemy(app)
 db.Model = Base
 
-"""acceder a localhost
->>> ob = app()
->>> ob.appointment_list()
-Listing of all appointments we have.
-
-"""
-
 
 @app.route('/')
 def hello():
-    return 'Hello, world i hate you!!'
+"""
+>>> hello()
+'Hello, world, i hate you!!!'
+"""
+return 'Hello, world, i hate you!!!'
 
 
 @app.route('/appointments/')
 def appointment_list():
-    return 'Listing of all appointments we have.'
+"""
+>>> appointment_list()
+'Listing of all appointments we have.'
+"""
+return 'Listing of all appointments we have.'
 
 
 @app.route('/appointments/<int:appointment_id>/')
 def appointment_detail(appointment_id):
-    return 'Detail of appointment #{}.'.format(appointment_id)
+"""
+>>> appointment_detail(3)
+'Detail of appointment #3.'
+"""
+return 'Detail of appointment #{}.'.format(appointment_id)
 
 
-@app.route(
-    '/appointments/<int:appointment_id>/edit/', methods=['GET', 'POST'])
+@app.route('/appointments/<int:appointment_id>/edit/', methods=['GET', 'POST'])
 def appointment_edit(appointment_id):
-    return 'Form to edit appointment #.'.format(appointment_id)
+"""
+>>> appointment_edit(5)
+'Form to edit appointment #5.'
+"""
+return 'Form to edit appointment #{}.'.format(appointment_id)
 
 
-@app.route(
-    '/appointments/create/',
-    methods=['GET', 'POST'])
+@app.route('/appointments/create/', methods=['GET', 'POST'])
 def appointment_create():
-    return 'Form to create a new appointment.'
+"""
+>>> appointment_create()
+'Form to create a new appointment.'
+"""
+return 'Form to create a new appointment.'
 
 
-@app.route(
-    '/appointments/<int:appointment_id>/delete/', methods=['DELETE'])
+@app.route('/appointments/<int:appointment_id>/delete/', methods=['DELETE'])
 def appointment_delete(appointment_id):
-    raise NotImplementedError('DELETE')
-
-if __name__ == '__main__':
-    app.run()
-    import doctest
-    doctest.testmod()
+raise NotImplementedError('DELETE')
+if __name__ == '__main__':  # pragma: no cover
+app.run(debug=True)
