@@ -4,7 +4,7 @@ python:
 # command to install dependencies
 install: "pip install -r requirements.txt"
 before_script: 
-  - "flake8 --ignore=E501,F403 app tests "
+  - "flake8 --ignore=E501,F403 sched"
 # command to run tests
 script: 
   - lettuce tests
