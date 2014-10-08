@@ -1,6 +1,12 @@
 from flask import Flask
 from flask.ext.sqlalchemy import SQLAlchemy
 from sched.models import Base
+from flask import abort, jsonify, redirect, render_template
+from flask import request, url_for
+from sched.forms import AppointmentForm
+from sched.models import Appointment
+
+
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///sched.db'
 # Use Flask-SQLAlchemy for its engine and session
@@ -49,11 +55,17 @@ def appointment_edit(appointment_id):
 
 @app.route('/appointments/create/', methods=['GET', 'POST'])
 def appointment_create():
-    """
-    >>> appointment_create()
-    'Form to create a new appointment.'
-    """
-    return 'Form to create a new appointment.'
+    """Provide HTML form to create a new appointment."""
+    form = AppointmentForm(request.form)
+    if request.method == 'POST' and form.validate():
+        appt = Appointment()
+        form.populate_obj(appt)
+        db.session.add(appt)
+        db.session.commit()
+        # Success. Send user back to full appointment list.
+        return redirect(url_for('appointment_list'))
+    # Either first load or validation error at this point.
+    return render_template('appointment/edit.html',form=form)
 
 
 @app.route('/appointments/<int:appointment_id>/delete/', methods=['DELETE'])
@@ -63,5 +75,3 @@ def appointment_delete(appointment_id):
 
 if __name__ == '__main__':  # pragma: no cover
     app.run(debug=True)
-    import doctest
-    doctest.testmod()
