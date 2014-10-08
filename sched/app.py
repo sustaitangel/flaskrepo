@@ -63,3 +63,5 @@ def appointment_delete(appointment_id):
 
 if __name__ == '__main__':  # pragma: no cover
     app.run(debug=True)
+    import doctest
+    doctest.testmod()
