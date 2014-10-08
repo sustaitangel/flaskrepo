@@ -35,13 +35,19 @@ def appointment_list():
     return 'Listing of all appointments we have.'
 
 
-@app.route('/appointments/<int:appointment_id>/')
+@app.route('/appointment/<int:appointment_id>/')
 def appointment_detail(appointment_id):
     """
     >>> appointment_detail(3)
     'Detail of appointment #3.'
     """
-    return 'Detail of appointment #{}.'.format(appointment_id)
+    """Provide HTML page with a given appointment."""
+    # Query: get Appointment object by ID.
+    appt = db.session.query(Appointment).get(appointment_id)
+    if appt is None:
+       # Abort with Not Found.
+       abort(404)
+    return render_template('appointment/detail.html',appt=appt)
 
 
 @app.route('/appointments/<int:appointment_id>/edit/', methods=['GET', 'POST'])
