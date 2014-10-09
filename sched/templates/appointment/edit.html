@@ -1,11 +1,18 @@
 {% extends 'base.html' %}
 {% from 'appointment/common.html' import edit_field %}
-{% set title = 'Add Appointment' %}
+{% if request.endpoint.endswith('edit') %}
+	{% set title = 'Edit Appointment' %}
+{% else %}
+	{% set title = 'Add Appointment' %}
+{% endif %}
 {% block title %}{{ title }}{% endblock title %}
 {% block main %}
+
+
 <div class="row">
 	<div class="appointment-edit well offset2 span8">
 	<form method="post" class="form-horizontal">
+		<BR><BR><BR>
 		<legend>{{ title }}</legend>
 		{{ edit_field(form.title, maxlength=255, class="span3",
 		placeholder="Important Meeting") }}
@@ -29,3 +36,5 @@
 	</div>
 </div>
 {% endblock main %}
+
+
