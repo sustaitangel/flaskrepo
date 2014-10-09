@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% set title = 'Log In' %}
+{% block title %}{{ title }}{% endblock title %}
+{% block main %}
+
+<div class="row">
+	<div class="appointment-edit well offset2 span8">
+	<form method="post" class="form-horizontal">		
+		<legend>{{ title }}</legend>
+		{{ edit_field(form.title, maxlength=255, class="span3",
+		placeholder="User") }}
+		
+		{{ edit_field(form.end, class="span3",  class="span3",
+		placeholder="Password") }}
+		
+		<div class="form-actions">
+		<button type="submit" class="btn">Log In</button>
+		</div>
+	</form>
+	</div>
+</div>
+{% endblock main %}
