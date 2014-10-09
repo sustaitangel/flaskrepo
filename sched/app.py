@@ -93,7 +93,21 @@ def appointment_create():
 
 @app.route('/appointments/<int:appointment_id>/delete/', methods=['DELETE'])
 def appointment_delete(appointment_id):
-    raise NotImplementedError('DELETE')
+    # raise NotImplementedError('DELETE')
+    appt = db.session.query(Appointment).get(appointment_id)
+    if appt is None:
+        # Abort with Not Found, but with simple JSON response.
+        response = jsonify({'status': 'Not Found'})
+        response.status = 404
+        return response
+    db.session.delete(appt)
+    db.session.commit()
+    return jsonify({'status': 'OK'})
+
+
+@app.errorhandler(404)
+def error_not_found(error):
+    return render_template('error/not_found.html'), 404
 
 
 if __name__ == '__main__':  # pragma: no cover
