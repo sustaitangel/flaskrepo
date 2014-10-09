@@ -34,7 +34,11 @@ def appointment_list():
     >>> appointment_list()
     'Listing of all appointments we have.'
     """
-    return 'Listing of all appointments we have.'
+    # return 'Listing of all appointments we have.'
+    # Query: Get all Appointment objects, sorted by date.
+    appts = (db.session.query(Appointment).order_by(
+        Appointment.start.asc()).all())
+    return render_template('appointment/index.html', appts=appts)
 
 
 @app.route('/appointments/<int:appointment_id>/')
