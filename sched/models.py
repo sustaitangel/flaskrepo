@@ -31,7 +31,7 @@ class User(Base):
         self._password = generate_password_hash(password)
 
     password_descriptor = property(_get_password, _set_password)
-    password = synonym('_password',   descriptor=password_descriptor)
+    password = synonym('_password', descriptor=password_descriptor)
 
     def check_password(self, password):
         if self.password is None:

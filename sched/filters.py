@@ -1,5 +1,5 @@
 from jinja2 import Markup, evalcontextfilter, escape
-
+from datetime import datetime
 
 def init_app(app):
     app.jinja_env.filters['date'] = do_date
@@ -9,6 +9,13 @@ def init_app(app):
 
 
 def do_datetime(dt, format=None):
+    """
+    >>> do_datetime(None)
+    ''
+    
+    >>> do_datetime(datetime(1990, 07, 01, 07, 06, 00))
+    '1990-07-01 - Sunday at 7:06am'
+    """
     if dt is None:
         return ''
     if format is None:
@@ -21,12 +28,26 @@ def do_datetime(dt, format=None):
 
 
 def do_date(dt, format='%Y-%m-%d - %A'):
+    """
+    >>> do_date(None)
+    ''
+
+    >>> do_datetime(datetime(1990, 07, 01, 07, 06, 00))
+    '1990-07-01 - Sunday at 7:06am'
+    """
     if dt is None:
         return ''
     return dt.strftime(format)
 
 
 def do_duration(seconds):
+    """
+    >>> do_duration(1080)
+    '18 minutes'
+    
+    >>> do_duration(259578)
+    '3 days, 6 minutes, 18 seconds'
+    """
     m, s = divmod(seconds, 60)
     h, m = divmod(m, 60)
     d, h = divmod(h, 24)
@@ -56,3 +77,7 @@ def do_nl2br(context, value):
     if context.autoescape:
         formatted = Markup(formatted)
     return formatted
+
+if __name__ == '__main__':  # pragma: no cover
+    import doctest
+    doctest.testmod()
