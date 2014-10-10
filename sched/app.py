@@ -24,11 +24,14 @@ filters.init_app(app)
 login_manager = LoginManager()
 login_manager.setup_app(app)
 login_manager.login_view = 'login'
-app.secret_key='que_onda_banda'
+app.secret_key = 'que_onda_banda'
+
+
 @login_manager.user_loader
 def load_user(user_id):
     """Flask-Login hook to load a User instance from ID."""
     return db.session.query(User).get(user_id)
+
 
 @app.route('/login/', methods=['GET', 'POST'])
 def login():
@@ -38,14 +41,17 @@ def login():
     error = None
     if request.method == 'POST' and form.validate():
         email = form.username.data.lower().strip()
+        print(email)
         password = form.password.data.lower().strip()
-        user, authenticated = User.authenticate(db.session.query, email, password)
+        print(password)
+        user, authenticated = User.authenticate(
+            db.session.query, email, password)
         if authenticated:
             login_user(user)
             return redirect(url_for('appointment_list'))
     else:
         error = 'Incorrect username or password.'
-    return render_template('user/login.html',form=form, error=error)
+    return render_template('user/login.html', form=form, error=error)
 
 
 @app.route('/logout/')
@@ -125,8 +131,8 @@ def appointment_create():
     """Provide HTML form to create a new appointment."""
     form = AppointmentForm(request.form)
     if request.method == 'POST' and form.validate():
-        appt = Appointment(user_id=current_user.id)        
-        appt = Appointment()
+        appt = Appointment(user_id=current_user.id)
+        # appt = Appointment()
         form.populate_obj(appt)
         db.session.add(appt)
         db.session.commit()
@@ -149,7 +155,7 @@ def appointment_delete(appointment_id):
     if appt.user_id != current_user.id:
         response = jsonify({'status': 'Not match User'})
         response.status = 403
-        return response       
+        return response
     db.session.delete(appt)
     db.session.commit()
     return jsonify({'status': 'OK'})
