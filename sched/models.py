@@ -4,6 +4,7 @@ from sqlalchemy import DateTime, Integer, String, Text
 from sqlalchemy.ext.declarative import declarative_base
 from werkzeug import check_password_hash
 from werkzeug import generate_password_hash
+from sqlalchemy.orm import relationship, synonym
 Base = declarative_base()
 
 
@@ -27,8 +28,8 @@ class User(Base):
             password = password.strip()
         self._password = generate_password_hash(password)
     
-    password_descriptor = property(_get_password,_set_password)
-    password = synonym('_password',   descriptor=password_descriptor)
+        password_descriptor = property(_get_password,_set_password)
+        password = synonym('_password',   descriptor=password_descriptor)
 
     def check_password(self, password):
         if self.password is None:
@@ -36,7 +37,7 @@ class User(Base):
         password = password.strip()
         if not password:
             return False
-        return check_password_hash(self.password, password)
+        return check_password_hash(self._password, password)
 
 
     @classmethod
@@ -92,11 +93,13 @@ if __name__ == '__main__':
     from sqlalchemy import create_engine
     from sqlalchemy.orm import sessionmaker
     engine = create_engine('sqlite:///sched.db', echo=True)
-
     Base.metadata.create_all(engine)
     Session = sessionmaker(bind=engine)
     session = Session()
     now = datetime.now()
+    
+    
+
     session.add(Appointment(
         title='Important Meeting',
         start=now + timedelta(days=3),

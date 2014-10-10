@@ -3,7 +3,7 @@ from flask.ext.sqlalchemy import SQLAlchemy
 from sched.models import Base
 from flask import abort, jsonify, redirect, render_template
 from flask import request, url_for
-from sched.forms import AppointmentForm
+from sched.forms import AppointmentForm, LoginForm
 from sched.models import Appointment
 from sched import filters
 from flask.ext.login import login_required
@@ -24,7 +24,7 @@ filters.init_app(app)
 login_manager = LoginManager()
 login_manager.setup_app(app)
 login_manager.login_view = 'login'
-
+app.secret_key='que_onda_banda'
 @login_manager.user_loader
 def load_user(user_id):
     """Flask-Login hook to load a User instance from ID."""
@@ -60,7 +60,8 @@ def hello():
     >>> hello()
     'Hello, world, i hate you!!!'
     """
-    return 'Hello, world, i hate you!!!'
+    # return 'Hello, world, i hate you!!!'
+    return render_template('index.html')
 
 
 @app.route('/appointments/')
