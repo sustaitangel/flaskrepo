@@ -6,6 +6,26 @@ from datetime import datetime
 from datetime import timedelta
 
 
+class pruebaUsuario(unittest.TestCase):
+
+    def testPassword1(self):
+        user = models.User(name="juanis", email="cimat@cimat.mx", password="246")
+        self.assertNotEqual(user._get_password(), "111")  
+        user._set_password("111")        
+        self.assertEqual(False, user.check_password("hola"))
+        self.assertEqual(True, user.check_password("111"))
+
+    def testPassword2(self):
+        user = models.User(name="juanis", email="cimat@cimat.mx")
+        self.assertEqual(False, user.check_password("1234"))
+
+    def testAuthenticate(self):
+        db=app.db.session.query
+        user, a= models.User.authenticate (db, "cimat@cimat.mx", "1234")
+        self.assertNotEqual(a, False)
+        self.assertNotEqual(user.name, "juanis")
+        
+
 class pruebaFilters(unittest.TestCase):
 
     def testDo_datetimeNone(self):
