@@ -25,6 +25,7 @@ def find_field_by_class(browser, attribute):
 def given_for_acces_to_the_page_group1(step, url):
     world.response = world.browser.get(url)
 
+
 @step('I fill the textBox "([^"]*)" with "([^"]*)"')
 def when_i_fill_the_textbox_group1_with_group2(step, field_id, value):
     with AssertContextManager(step):
@@ -46,13 +47,6 @@ def and_and_i_get_the_form(step):
     with AssertContextManager(step):
         form = world.browser.find_element_by_class_name('form-horizontal')
         form.submit()
-
-
-@step('I take a click in the button "([^"]*)"')
-def and_i_take_a_click_in_the_button_group1(step, field_class):
-    with AssertContextManager(step):
-        button = world.browser.find_element_by_class_name(field_class)
-        button.click()
 
 
 @step('I can see detail of class "([^"]*)" contains "([^"]*)"')
@@ -118,3 +112,9 @@ def then_i_can_see_detail_of_class_group1_no_contains_group2(step, element_class
             lst.append(e.text)
 
         assert title not in lst
+
+
+@step(u'Then I can see detail of class "([^"]*)" no contains "([^"]*)"')
+def then_i_can_see_detail_of_class_group1_no_contains_group2(step, group1, group2):
+    assert False, 'This step must be implemented'
+
