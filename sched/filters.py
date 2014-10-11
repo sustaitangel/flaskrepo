@@ -33,8 +33,8 @@ def do_date(dt, format='%Y-%m-%d - %A'):
     ''
 
     >>> from datetime import datetime
-    >>> do_date(datetime(1990, 07, 01, 07, 06, 00))
-    '1990-07-01 - Sunday'
+    >>> do_datetime(datetime(1990, 07, 01, 07, 06, 00))
+    '1990-07-01 - Sunday at 7:06am'
     """
     if dt is None:
         return ''
