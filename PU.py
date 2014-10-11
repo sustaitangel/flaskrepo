@@ -1,4 +1,5 @@
 import unittest
+from sched import app 
 from sched import models
 from sched import forms
 from sched import filters
@@ -19,12 +20,37 @@ class pruebaUsuario(unittest.TestCase):
         user = models.User(name="juanis", email="cimat@cimat.mx")
         self.assertEqual(False, user.check_password("1234"))
 
-    def testAuthenticate(self):
+    def testAuthenticate1(self):
         db=app.db.session.query
         user, a= models.User.authenticate (db, "cimat@cimat.mx", "1234")
         self.assertNotEqual(a, False)
         self.assertNotEqual(user.name, "juanis")
-        
+
+    def testAuthenticate2(self):
+        db=app.db.session.query
+        user, a= models.User.authenticate (db, "cimat@cimat.mx", "1234")
+        self.assertEqual(a, True)
+        self.assertEqual(user.name,"luis")
+
+    def testAuthenticate3(self):
+        db=app.db.session.query
+        user, a= models.User.authenticate (db, "cimat@cimat.mx", "111")
+        self.assertEqual(a, False)
+        self.assertEqual(user.name,"luis")
+
+    def testAuthenticate4(self):
+        db=app.db.session.query
+        user, a= models.User.authenticate (db, "cimat1@cimat.mx", "111")
+        self.assertEqual(a, False)
+        self.assertEqual(user,None)
+
+    def test_user_status(self):
+        user = models.User(id=2,name="brisia", email="cimat@cimat.mx", password="333")
+        self.assertNotEqual(user.get_id(), 2)
+        self.assertNotEqual(user.is_active(), False)
+        self.assertNotEqual(user.is_anonymous(), True)
+        self.assertNotEqual(user.is_authenticated(), False)
+
 
 class pruebaFilters(unittest.TestCase):
 
