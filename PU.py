@@ -1,4 +1,5 @@
 import unittest
+from jinja2 import Environment
 from sched import app
 from sched import models
 from sched import forms
@@ -177,6 +178,28 @@ class pruebaFilters(unittest.TestCase):
     def testDo_duration(self):
         d = filters.do_duration(259578)
         self.assertEqual(d, '3 days, 6 minutes, 18 seconds')
+
+    def testDo_durationHrMsSs(self):
+        d = filters.do_duration(39574)
+        self.assertEqual(d, '10 hours, 59 minutes, 34 seconds')
+
+    def testDo_durationHMS(self):
+        d = filters.do_duration(3661)
+        self.assertEqual(d, '1 hour, 1 minute, 1 second')
+
+    def testDo_durationMS(self):
+        d = filters.do_duration(75)
+        self.assertEqual(d, '1 minute, 15 seconds')
+
+    def testDo_nl2br(self):
+        formato = Environment(
+            autoescape=False,
+            extensions=['jinja2.ext.i18n', 'jinja2.ext.autoescape'])
+        txt = "Texto '\n' retorno '\n' texto"
+        txt2 = filters.do_nl2br(formato, txt)
+        self.assertNotEqual(txt2, "")
+        self.assertEqual(
+            txt2, "Texto &#39;<br />&#39; retorno &#39;<br />&#39; texto")
 
 
 class pruebaForm(unittest.TestCase):

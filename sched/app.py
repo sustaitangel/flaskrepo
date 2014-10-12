@@ -40,8 +40,8 @@ def login():
     form = LoginForm(request.form)
     error = None
     if request.method == 'POST' and form.validate():
-        email = form.username.data.lower().strip()        
-        password = form.password.data.lower().strip()       
+        email = form.username.data.lower().strip()
+        password = form.password.data.lower().strip()
         user, authenticated = User.authenticate(
             db.session.query, email, password)
         if authenticated:
