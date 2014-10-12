@@ -83,14 +83,14 @@ def when_i_update_the_textbox_group1_with_actual_date(step, field_id):
 
 
 @step('I can see detail of class"([^"]*)" contains the actual date')
-def then_i_can_see_detail_of_class_group1_contains_the_actual_date(step, element_class):
+def then_i_can_class_group1_contains_the_actual_date(step, element_class):
     with AssertContextManager(step):
         element = world.browser.find_element_by_class_name(element_class)
         assert fechaActualComparacion in element.text, "Got %s " % element.text
 
 
 @step('I can see least "([^"]*)" appoitments with the class "([^"]*)"')
-def then_i_can_see_least_group1_appoitments_with_the_class_group2(step, num, element_class):
+def then_it_group1_appoitments_the_class_group2(step, num, element_class):
     with AssertContextManager(step):
         elements = world.browser.find_elements_by_class_name(element_class)
         assert len(elements) > int(num)
@@ -104,7 +104,7 @@ def when_if_choose_the_appointment_named_group1(step, title):
 
 
 @step('Then I can see detail of class "([^"]*)" not contains "([^"]*)"')
-def then_i_can_see_detail_of_class_group1_no_contains_group2(step, element_class, title):
+def then_i_can_see_detail_group1_no__group2(step, element_class, title):
     with AssertContextManager(step):
         elements = world.browser.find_elements_by_class_name(element_class)
         lst = []
@@ -115,6 +115,5 @@ def then_i_can_see_detail_of_class_group1_no_contains_group2(step, element_class
 
 
 @step(u'Then I can see detail of class "([^"]*)" no contains "([^"]*)"')
-def then_i_can_see_detail_of_class_group1_no_contains_group2(step, group1, group2):
+def then_i_detail_of_class_group1_no_group2(step, group1, group2):
     assert False, 'This step must be implemented'
-
