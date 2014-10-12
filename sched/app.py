@@ -55,7 +55,6 @@ def log():
     if current_user.is_authenticated():
         return redirect(url_for('appointment_list'))
 
-
 @app.route('/logout/')
 def logout():
     logout_user()

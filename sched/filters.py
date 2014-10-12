@@ -33,8 +33,8 @@ def do_date(dt, format='%Y-%m-%d - %A'):
     ''
 
     >>> from datetime import datetime
-    >>> do_date(datetime(1990, 07, 01, 07, 06, 00))
-    '1990-07-01 - Sunday'
+    >>> do_datetime(datetime(1990, 07, 01, 07, 06, 00))
+    '1990-07-01 - Sunday at 7:06am'
     """
     if dt is None:
         return ''
@@ -53,36 +53,24 @@ def do_duration(seconds):
     h, m = divmod(m, 60)
     d, h = divmod(h, 24)
     tokens = []
-    tokens.append(Dia(d))
-    tokens.append(Hora(h))
-    tokens.append(Minuto(m))
-    tokens.append(Segundo(s))
+    if d > 1:
+        tokens.append('{d} days')
+    elif d:
+        tokens.append('{d} day')
+    if h > 1:
+        tokens.append('{h} hours')
+    elif h:
+        tokens.append('{h} hour')
+    if m > 1:
+        tokens.append('{m} minutes')
+    elif m:
+        tokens.append('{m} minute')
+    if s > 1:
+        tokens.append('{s} seconds')
+    elif s:
+        tokens.append('{s} second')
     template = ', '.join(tokens)
     return template.format(d=d, h=h, m=m, s=s)
-
-
-def Dia(d):
-    if(d > 1):
-        return '{d} days'
-    return '{d} day'
-
-
-def Hora(h):
-    if(h > 1):
-        return '{h} hours'
-    return '{h} hour'
-
-
-def Minuto(m):
-    if(m > 1):
-        return '{m} minutes'
-    return '{m} minute'
-
-
-def Segundo(s):
-    if(s > 1):
-        return '{s} seconds'
-    return '{s} second'
 
 
 def do_nl2br(context, value):
