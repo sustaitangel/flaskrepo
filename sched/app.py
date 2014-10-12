@@ -35,8 +35,7 @@ def load_user(user_id):
 
 @app.route('/login/', methods=['GET', 'POST'])
 def login():
-    if current_user.is_authenticated():
-        return redirect(url_for('appointment_list'))
+    log()
     form = LoginForm(request.form)
     error = None
     if request.method == 'POST' and form.validate():
@@ -51,6 +50,10 @@ def login():
         error = 'Incorrect username or password.'
     return render_template('user/login.html', form=form, error=error)
 
+
+def log():
+    if current_user.is_authenticated():
+        return redirect(url_for('appointment_list'))
 
 @app.route('/logout/')
 def logout():
@@ -112,8 +115,6 @@ def appointment_edit(appointment_id):
     appt = db.session.query(Appointment).get(appointment_id)
     if appt is None:
         abort(404)
-    if appt.user_id != current_user.id:
-        abort(403)
     form = AppointmentForm(request.form, appt)
     if request.method == 'POST' and form.validate():
         form.populate_obj(appt)
