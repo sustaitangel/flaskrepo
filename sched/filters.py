@@ -44,10 +44,10 @@ def do_date(dt, format='%Y-%m-%d - %A'):
 def do_duration(seconds):
     """
     >>> do_duration(1080)
-    '18 minutes'
+    '0 day, 0 hour, 18 minutes, 0 second'
 
     >>> do_duration(259578)
-    '3 days, 6 minutes, 18 seconds'
+    '3 days, 0 hour, 6 minutes, 18 seconds'
     """
     m, s = divmod(seconds, 60)
     h, m = divmod(m, 60)
@@ -62,24 +62,48 @@ def do_duration(seconds):
 
 
 def Dia(d):
+    """
+    >>> Dia(3)
+    '{d} days'
+    >>> Dia(1)
+    '{d} day'
+    """
     if(d > 1):
         return '{d} days'
     return '{d} day'
 
 
 def Hora(h):
+    """
+    >>> Hora(5)
+    '{h} hours'
+    >>> Hora(0)
+    '{h} hour'
+    """
     if(h > 1):
         return '{h} hours'
     return '{h} hour'
 
 
 def Minuto(m):
+    """
+    >>> Minuto(4)
+    '{m} minutes'
+    >>> Minuto(1)
+    '{m} minute'
+    """
     if(m > 1):
         return '{m} minutes'
     return '{m} minute'
 
 
 def Segundo(s):
+    """
+    >>> Segundo(3)
+    '{s} seconds'
+    >>> Segundo(1)
+    '{s} second'
+    """
     if(s > 1):
         return '{s} seconds'
     return '{s} second'

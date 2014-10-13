@@ -177,19 +177,19 @@ class pruebaFilters(unittest.TestCase):
 
     def testDo_duration(self):
         d = filters.do_duration(259578)
-        self.assertEqual(d, '3 days, 6 minutes, 18 seconds')
+        self.assertEqual(d, '3 days, 0 hour, 6 minutes, 18 seconds')
 
     def testDo_durationHrMsSs(self):
         d = filters.do_duration(39574)
-        self.assertEqual(d, '10 hours, 59 minutes, 34 seconds')
+        self.assertEqual(d, '0 day, 10 hours, 59 minutes, 34 seconds')
 
     def testDo_durationHMS(self):
         d = filters.do_duration(3661)
-        self.assertEqual(d, '1 hour, 1 minute, 1 second')
+        self.assertEqual(d, '0 day, 1 hour, 1 minute, 1 second')
 
     def testDo_durationMS(self):
         d = filters.do_duration(75)
-        self.assertEqual(d, '1 minute, 15 seconds')
+        self.assertEqual(d, '0 day, 0 hour, 1 minute, 15 seconds')
 
     def testDo_nl2br(self):
         formato = Environment(
