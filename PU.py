@@ -162,6 +162,14 @@ class pruebaUsuario(unittest.TestCase):
         self.assertEqual(a, False)
         self.assertEqual(user, None)
 
+    def testAuthenticate5(self):
+        db = app.db.session.query
+        user, a = models.User.authenticate(db, "cimat@cimat.mx", "1234")
+        self.assertEqual(a, True)
+        self.assertEqual(user.name, "luis")
+        self.assertEqual(user.is_active(), True)
+        self.assertNotEqual(user.is_active(), False)
+
     def test_user_status(self):
         user = models.User(
             id=2, name="brisia", email="cimat@cimat.mx", password="333")
