@@ -108,6 +108,10 @@ class pruebaApp(unittest.TestCase):
         assert "Reunion" in r.data
 
 
+class testDelete(unittest.TestCase):
+    pass
+
+
 class pruebaUsuario(unittest.TestCase):
 
     def testPassword1(self):
@@ -200,6 +204,24 @@ class pruebaFilters(unittest.TestCase):
         self.assertNotEqual(txt2, "")
         self.assertEqual(
             txt2, "Texto &#39;<br />&#39; retorno &#39;<br />&#39; texto")
+
+    def testDatetimeFormat(self):
+        formato = '%Y-%m-%d - %A'
+        now = datetime(2014, 10, 13, 06, 10, 00)
+        fecha = filters.do_datetime(now, formato)
+        self.assertNotEqual(fecha, '2014-10-13 - Monday at 6:10am')
+
+    def testDo_nl2brMarkup(self):
+        formato = Environment(autoescape=True,
+                              extensions=['jinja2.ext.i18n',
+                                          'jinja2.ext.autoescape'])
+        t = "Texto '\n' retorno '\n' texto <script>seguido</script>"
+        changes = filters.do_nl2br(formato, t)
+        self.assertNotEqual(
+            changes, "Texto &#39;<br />&#39; retorno &#39;<br />&#39; seguido")
+        self.assertEqual(
+            changes, "Texto &#39;<br />&#39; retorno &#39;\
+            <br />&#39; texto &lt;script&gt;seguido&lt;/script&gt;")
 
 
 class pruebaForm(unittest.TestCase):
