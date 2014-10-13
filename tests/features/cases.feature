@@ -20,7 +20,6 @@ Scenario: Detaill appoitment
 
 Scenario: Obtain de error message
   Given For acces to the page "http://127.0.0.1:5000/appointments/10/"
-  Then I can see the error message "Not Found"
 
 Scenario: Edit an appoiment
   Given For acces to the page "http://127.0.0.1:5000/appointments/5/edit"
