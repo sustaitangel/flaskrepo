@@ -88,7 +88,7 @@ class Appointment(Base):
     def __repr__(self):
         return ('<{self.__class__.__name__}: {self.id}>'.format(self=self))
 
-
+'''
 if __name__ == '__main__':
     from datetime import timedelta
     from sqlalchemy import create_engine
@@ -145,3 +145,4 @@ if __name__ == '__main__':
         allday=False)
     session.add(appt)
     session.commit()
+'''
