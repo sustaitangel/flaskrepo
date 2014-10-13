@@ -18,7 +18,7 @@ before_script:
 # command to run tests
 script: 
   - coverage run --omit="*site-packages*" PU.py
-  - coverage run --omit="*site-packages*" pruebaDoctest
+  - coverage run --omit="*site-packages*" pruebaDoctest.py
   - coverage report -m
   - nosetests --with-doctest -s sched/pruebas
   - python manage.py runserver & lettuce tests
