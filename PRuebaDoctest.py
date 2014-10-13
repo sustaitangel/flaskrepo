@@ -61,7 +61,7 @@ def appointment_delete(appointment_id):
     raise NotImplementedError('DELETE')
 
 
-if __name__ == '__main__':  # pragma: no cover
-    app.run(debug=True)
+if __name__ == '__main__':  # pragma: no cover   
     import doctest
     doctest.testmod()
+  
