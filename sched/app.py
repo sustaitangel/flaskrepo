@@ -152,10 +152,11 @@ def appointment_delete(appointment_id):
         response = jsonify({'status': 'Not Found'})
         response.status = 404
         return response
-    if appt.user_id != current_user.id:
+        '''if appt.user_id != current_user.id:
         response = jsonify({'status': 'Not match User'})
         response.status = 403
         return response
+        '''
     db.session.delete(appt)
     db.session.commit()
     return jsonify({'status': 'OK'})

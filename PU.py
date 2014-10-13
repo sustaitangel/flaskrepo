@@ -6,6 +6,7 @@ from sched import forms
 from sched import filters
 from datetime import datetime
 from datetime import timedelta
+import json
 
 
 class pruebaApp(unittest.TestCase):
@@ -107,6 +108,18 @@ class pruebaApp(unittest.TestCase):
         self.assertEquals(r.status_code, 200)
         assert "Reunion" in r.data
 
+    def testAppoitnmentDelete(self):
+        r = self.a.post('/login/',
+                        data=dict(username='cimat@cimat.mx',
+                                  password='1234'), follow_redirects=True)
+
+        r = self.a.get('/appointments/1/delete/')
+        self.assertEquals(r.status_code, 405)
+        assert "Not Allowed" in r.data
+        r = self.a.delete('/appointments/11/delete/', follow_redirects=True)
+        self.assertEquals(r.status_code, 200)
+        self.assertEqual(json.loads(r.data), {'status': 'OK'})
+
 
 class testDelete(unittest.TestCase):
     pass
@@ -142,7 +155,6 @@ class pruebaUsuario(unittest.TestCase):
         self.assertEqual(user.is_active(), True)
         self.assertNotEqual(user.is_active(), False)
 
-
     def password(self):
         user = models.User(name="luis", email="cimat@cimat.mx")
         self.assertNotEqual(True, user.check_password("1234"))
@@ -154,7 +166,6 @@ class pruebaUsuario(unittest.TestCase):
         user, a = models.User.authenticate(db, "cimat@cimat.mx", "111")
         self.assertEqual(a, False)
         self.assertEqual(user.name, "luis")
-        
 
     def testAuthenticate4(self):
         db = app.db.session.query
