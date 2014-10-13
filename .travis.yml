@@ -20,5 +20,5 @@ script:
   - coverage run --omit="*site-packages*" PU.py
   - coverage report -m
   - nosetests --with-doctest -s sched/filters
-  - nosetests --with-doctest -s sched/PRuebaDoctest
+  - nosetests --with-doctest -s sched/pruebaDoctest
   - python manage.py runserver & lettuce tests
