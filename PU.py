@@ -123,8 +123,10 @@ class pruebaUsuario(unittest.TestCase):
         self.assertEqual(True, user.check_password("111"))
 
     def testPassword2(self):
-        user = models.User(name="juanis", email="cimat@cimat.mx")
-        self.assertEqual(False, user.check_password("1234"))
+        user = models.User(name="luis", email="cimat@cimat.mx")
+        self.assertNotEqual(True, user.check_password("1234"))
+        self.assertNotEqual(True, user.check_password("lol"))
+        self.assertEqual(False, user.check_password("lol"))
 
     def testAuthenticate1(self):
         db = app.db.session.query
@@ -137,12 +139,22 @@ class pruebaUsuario(unittest.TestCase):
         user, a = models.User.authenticate(db, "cimat@cimat.mx", "1234")
         self.assertEqual(a, True)
         self.assertEqual(user.name, "luis")
+        self.assertEqual(user.is_active(), True)
+        self.assertNotEqual(user.is_active(), False)
+
+
+    def password(self):
+        user = models.User(name="luis", email="cimat@cimat.mx")
+        self.assertNotEqual(True, user.check_password("1234"))
+        self.assertNotEqual(True, user.check_password("lol"))
+        self.assertEqual(False, user.check_password("lol"))
 
     def testAuthenticate3(self):
         db = app.db.session.query
         user, a = models.User.authenticate(db, "cimat@cimat.mx", "111")
         self.assertEqual(a, False)
         self.assertEqual(user.name, "luis")
+        
 
     def testAuthenticate4(self):
         db = app.db.session.query
