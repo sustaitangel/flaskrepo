@@ -144,5 +144,4 @@ if __name__ == '__main__':
         end=now + timedelta(seconds=1800),
         allday=False)
     session.add(appt)
-    session.commit()
-'''
+    session.commit() '''
