@@ -215,13 +215,14 @@ class pruebaFilters(unittest.TestCase):
         formato = Environment(autoescape=True,
                               extensions=['jinja2.ext.i18n',
                                           'jinja2.ext.autoescape'])
-        t = "Texto '\n' retorno '\n' texto <script>seguido</script>"
+        t = "T '\n'r '\n't <script>s </script>"
         changes = filters.do_nl2br(formato, t)
         self.assertNotEqual(
             changes, "Texto &#39;<br />&#39; retorno &#39;<br />&#39; seguido")
         self.assertEqual(
-            changes, "Texto &#39;<br />&#39; retorno &#39;\
-            <br />&#39; texto &lt;script&gt;seguido&lt;/script&gt;")
+            changes,
+            "T &#39;<br />&#39;r &#39;<br />&#39;t &lt;" +
+            "script&gt;s &lt;/script&gt;")
 
 
 class pruebaForm(unittest.TestCase):
