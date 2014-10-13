@@ -27,7 +27,7 @@ def given_for_acces_to_the_page_group1(step, url):
 
 
 @step('I fill the textBox "([^"]*)" with "([^"]*)"')
-def when_i_fill_the_textbox_group1_with_group2(step, field_id, value):
+def when_i_fill_textbox_group1_with_group2(step, field_id, value):
     with AssertContextManager(step):
         text_field = world.browser.find_element_by_id(field_id)
         text_field.clear()
